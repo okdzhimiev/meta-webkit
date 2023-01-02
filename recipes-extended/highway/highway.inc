@@ -15,6 +15,6 @@ EXTRA_OECMAKE = " -DBUILD_TESTING=OFF \
     -DHWY_ENABLE_EXAMPLES=OFF \
     -DHWY_ENABLE_INSTALL=ON"
 
-CXXFLAGS:append:arm = " -mfp16-format=ieee"
+CXXFLAGS_append_arm = " -mfp16-format=ieee"
 
 inherit cmake

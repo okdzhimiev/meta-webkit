@@ -24,6 +24,6 @@ do_install() {
    make DESTDIR="${D}/usr/share" install
 }
 
-FILES:${PN} = " \
+FILES_${PN} = " \
 /usr/share/webkitgtk-test-fonts/* \
 "

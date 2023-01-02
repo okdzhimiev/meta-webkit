@@ -1,7 +1,7 @@
 require wpewebkit.inc
 require conf/include/devupstream.inc
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SRC_URI = "https://wpewebkit.org/releases/${BPN}-${PV}.tar.xz;name=tarball \
            file://0001-FELightningNEON.cpp-fails-to-build-NEON-fast-path-se.patch \
@@ -10,14 +10,14 @@ SRC_URI = "https://wpewebkit.org/releases/${BPN}-${PV}.tar.xz;name=tarball \
 SRC_URI[tarball.sha256sum] = "1dd9075eec7253a1b0d038a73f92ddbb9174394e6a7527ec07b4464fa6290498"
 
 DEPENDS += " libwpe"
-RCONFLICTS:${PN} = "libwpe (< 1.12)"
+RCONFLICTS_${PN} = "libwpe (< 1.12)"
 
-SRC_URI:class-devupstream = "\
+SRC_URI_class-devupstream = "\
     git://github.com/WebKit/WebKit.git;protocol=https;branch=main \
 "
 
 # WPE 2.38.X branch was forked from the main branch in this commit
-SRCREV:class-devupstream = "ab63faf432abcb7cfc469fbb1a0d2a89c94cfa20"
+SRCREV_class-devupstream = "ab63faf432abcb7cfc469fbb1a0d2a89c94cfa20"
 
 # documentation: Needed from 2.38
 PACKAGECONFIG[documentation] = "-DENABLE_DOCUMENTATION=ON,-DENABLE_DOCUMENTATION=OFF, gi-docgen-native gi-docgen"
@@ -26,7 +26,7 @@ PACKAGECONFIG[documentation] = "-DENABLE_DOCUMENTATION=ON,-DENABLE_DOCUMENTATION
 PACKAGECONFIG[introspection] = "-DENABLE_INTROSPECTION=ON,-DENABLE_INTROSPECTION=OFF, gobject-introspection-native"
 
 # webgl2: Activated by default from >2.38
-PACKAGECONFIG:append:class-devupstream = " webgl2"
+PACKAGECONFIG_append_class-devupstream = " webgl2"
 
 # TODO: documentation and introspection are disabled by default because the are
 # causing cross-compiling build errors
@@ -36,4 +36,4 @@ PACKAGECONFIG:append:class-devupstream = " webgl2"
 PACKAGECONFIG[lbse] = "-DENABLE_LAYER_BASED_SVG_ENGINE=ON,-DENABLE_LAYER_BASED_SVG_ENGINE=OFF, "
 
 # unifdef-native: Needed since >2.38.
-DEPENDS:append:class-devupstream = " unifdef-native"
+DEPENDS_append_class-devupstream = " unifdef-native"

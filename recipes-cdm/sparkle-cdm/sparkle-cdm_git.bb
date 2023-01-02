@@ -20,14 +20,14 @@ PACKAGECONFIG[sample-player] = "-Dsample-player=enabled,-Dsample-player=disabled
 PACKAGECONFIG[clearkey-module] = "-Dclearkey-module=enabled,-Dclearkey-module=disabled,json-glib openssl"
 
 PROVIDES += "virtual/open-cdm"
-RPROVIDES:${PN} += "virtual/open-cdm"
+RPROVIDES_${PN} += "virtual/open-cdm"
 
 PACKAGES =+ "${PN}-sample-player ${PN}-clearkey-module"
 
-FILES:${PN} += "${libdir}/libocdm.so \
+FILES_${PN} += "${libdir}/libocdm.so \
                 ${libdir}/gstreamer-1.0/libgstsprkl.so \
 "
-FILES:${PN}-sample-player += "${bindir}/sample-player"
-FILES:${PN}-clearkey-module += "${libdir}/sparkle-cdm/libsparkle-cdm-clearkey.so"
+FILES_${PN}-sample-player += "${bindir}/sample-player"
+FILES_${PN}-clearkey-module += "${libdir}/sparkle-cdm/libsparkle-cdm-clearkey.so"
 FILES_SOLIBSDEV = ""
 

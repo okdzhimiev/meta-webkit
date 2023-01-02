@@ -2,7 +2,7 @@ SUMMARY = "JPEG XL reference implementation"
 HOMEPAGE = "https://github.com/libjxl/libjxl/"
 BUGTRACKER = "https://github.com/libjxl/libjxl/issues"
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 S = "${WORKDIR}/git"
 
@@ -39,5 +39,5 @@ EXTRA_OECMAKE = " -DBUILD_TESTING=OFF \
 
 inherit cmake pkgconfig
 
-CXXFLAGS:append:arm = " -mfp16-format=ieee"
+CXXFLAGS_append_arm = " -mfp16-format=ieee"
 

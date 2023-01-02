@@ -9,7 +9,7 @@ BUGTRACKER = "https://github.com/Igalia/cog/issues"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://COPYING;md5=bf1229cd7425b302d60cdb641b0ce5fb"
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SRC_URI = "https://wpewebkit.org/releases/${P}.tar.xz"
 
@@ -17,16 +17,16 @@ SRC_URI = "https://wpewebkit.org/releases/${P}.tar.xz"
 DEPENDS = " \
             ${@bb.utils.contains('PACKAGECONFIG', 'webkitgtk', 'webkitgtk', 'wpewebkit', d)} \
             ${@bb.utils.contains('PACKAGECONFIG', 'fdo', 'wayland', '', d)} \
-            ${@bb.utils.contains_any('LAYERSERIES_CORENAMES', 'dunfell gatesgarth hardknott honister', 'libsoup-2.4', 'libsoup', d)} \
+            ${@bb.utils.contains_any('LAYERSERIES_CORENAMES', 'zeus dunfell gatesgarth hardknott honister', 'libsoup-2.4', 'libsoup', d)} \
             glib-2.0 wayland-native wayland-protocols \
             "
 
-DEPENDS:append:class-target = " \
+DEPENDS_append_class-target = " \
             ${@bb.utils.contains('PACKAGECONFIG', 'fdo', 'wayland-native', '', d)} \
             "
 
 # At run-time cog package should depend on virtual/wpebackend unless webkitgtk+ is enabled.
-RDEPENDS:${PN} += "\
+RDEPENDS_${PN} += "\
     ${@bb.utils.contains('PACKAGECONFIG', 'webkitgtk', '', 'virtual/wpebackend', d)} \
     xkeyboard-config \
     "
@@ -41,7 +41,7 @@ PACKAGECONFIG ?= " \
     ${COG_PACKAGECONFIG} \
 "
 
-PACKAGECONFIG:class-devupstream ?= " \
+PACKAGECONFIG_class-devupstream ?= " \
     ${@bb.utils.contains('PREFERRED_PROVIDER_virtual/wpebackend', 'wpebackend-fdo', 'drm', '', d)} \
     ${COG_PACKAGECONFIG} \
 "
@@ -51,11 +51,11 @@ PACKAGECONFIG:class-devupstream ?= " \
 # Also libWPEBackend-default.so should go into the main package.
 FILES_SOLIBSDEV = "${libdir}/libcogcore*.so"
 
-FILES:${PN} += " \
+FILES_${PN} += " \
     ${libdir}/libcogplatform*.so \
     ${datadir}/dbus-1/system.d/com.igalia.Cog.conf \
 "
-INSANE_SKIP:${PN} = "dev-so"
+INSANE_SKIP_${PN} = "dev-so"
 
 # Local user name starting cog with DBus system session enabled. This should be
 # set only if the dbus PACKAGECONFIG is enabled.

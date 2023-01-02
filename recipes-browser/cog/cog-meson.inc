@@ -10,7 +10,7 @@ PACKAGECONFIG[wl] = ",,wpebackend-fdo"
 
 # libsoup-3 is not available before Poky kirkstone.
 # http://git.yoctoproject.org/cgit/cgit.cgi/poky/commit/meta/recipes-support/libsoup/libsoup_3.0.1.bb?id=de296e2b2be876ca5cf2af309b710111e2b2581e
-PACKAGECONFIG:append = " ${@bb.utils.contains_any('LAYERSERIES_CORENAMES', 'dunfell gatesgarth hardknott honister', 'soup2', '', d)}"
+PACKAGECONFIG_append = " ${@bb.utils.contains_any('LAYERSERIES_CORENAMES', 'zeus dunfell gatesgarth hardknott honister', 'soup2', '', d)}"
 
 # possible platforms: drm, headless, wayland (COG_PLATFORM_WL)
 python __anonymous() {

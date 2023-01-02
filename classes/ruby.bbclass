@@ -1,7 +1,7 @@
 DEPENDS += " \
     ruby-native \
 "
-RDEPENDS:${PN} += " \
+RDEPENDS_${PN} += " \
     ruby \
 "
 
@@ -146,7 +146,7 @@ EXPORT_FUNCTIONS do_compile do_install
 
 PACKAGES = "${PN}-dbg ${PN} ${PN}-doc ${PN}-dev"
 
-FILES:${PN}-dbg += " \
+FILES_${PN}-dbg += " \
         ${libdir}/ruby/gems/${RUBY_GEM_VERSION}/gems/*/*/.debug \
         ${libdir}/ruby/gems/${RUBY_GEM_VERSION}/gems/*/*/*/.debug \
         ${libdir}/ruby/gems/${RUBY_GEM_VERSION}/gems/*/*/*/*/.debug \
@@ -154,7 +154,7 @@ FILES:${PN}-dbg += " \
         ${libdir}/ruby/gems/${RUBY_GEM_VERSION}/extensions/*/*/*/*/*/.debug \
         "
 
-FILES:${PN} += " \
+FILES_${PN} += " \
         ${libdir}/ruby/gems/${RUBY_GEM_VERSION}/gems \
         ${libdir}/ruby/gems/${RUBY_GEM_VERSION}/cache \
         ${libdir}/ruby/gems/${RUBY_GEM_VERSION}/bin \
@@ -164,6 +164,6 @@ FILES:${PN} += " \
         ${libdir}/ruby/gems/${RUBY_GEM_VERSION}/plugins \
         "
 
-FILES:${PN}-doc += " \
+FILES_${PN}-doc += " \
         ${libdir}/ruby/gems/${RUBY_GEM_VERSION}/doc \
         "

@@ -14,13 +14,13 @@ DEPENDS = "zlib libsoup-2.4 curl libxml2 cairo libxslt libidn \
            ${@bb.utils.contains_any('LAYERSERIES_CORENAMES', 'dunfell gatesgarth hardknott honister', 'libsoup-2.4', 'libsoup', d)} \
 "
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI = " \
     https://www.webkitgtk.org/releases/webkitgtk-${PV}.tar.xz;name=tarball \
 "
 SRC_URI[tarball.sha256sum] = "41f001d1ed448c6936b394a9f20e4640eebf83a7f08262df28504f7410604a5a"
 
-RRECOMMENDS:${PN} = "${PN}-bin \
+RRECOMMENDS_${PN} = "${PN}-bin \
                      ca-certificates \
                      shared-mime-info \
                      ttf-dejavu-sans \
@@ -28,7 +28,7 @@ RRECOMMENDS:${PN} = "${PN}-bin \
                      ttf-dejavu-serif \
                      ${@bb.utils.contains('PACKAGECONFIG', 'video', 'gstreamer1.0-plugins-base-meta gstreamer1.0-plugins-good-meta gstreamer1.0-plugins-bad-meta', '', d)} \
                      "
-RRECOMMENDS:${PN}-bin = "adwaita-icon-theme librsvg-gtk"
+RRECOMMENDS_${PN}-bin = "adwaita-icon-theme librsvg-gtk"
 
 inherit cmake lib_package pkgconfig perlnative python3native
 
@@ -81,24 +81,24 @@ EXTRA_OECMAKE = " \
 
 # libsoup-3 is not available before Poky kirkstone.
 # http://git.yoctoproject.org/cgit/cgit.cgi/poky/commit/meta/recipes-support/libsoup/libsoup_3.0.1.bb?id=de296e2b2be876ca5cf2af309b710111e2b2581e
-PACKAGECONFIG:append = " ${@bb.utils.contains_any('LAYERSERIES_CORENAMES', 'dunfell gatesgarth hardknott honister', 'soup2', '', d)}"
+PACKAGECONFIG_append = " ${@bb.utils.contains_any('LAYERSERIES_CORENAMES', 'zeus dunfell gatesgarth hardknott honister', 'soup2', '', d)}"
 
 # Javascript JIT is not supported on ppc/arm < v6/RISCV/mips64
-PACKAGECONFIG:remove:powerpc = "jit"
-PACKAGECONFIG:remove:powerpc64 = "jit"
-PACKAGECONFIG:remove:powerpc64le = "jit"
-PACKAGECONFIG:remove:armv4 = "jit"
-PACKAGECONFIG:remove:armv5 = "jit"
-PACKAGECONFIG:remove:armv6 = "jit"
-PACKAGECONFIG:remove:riscv32 = "jit"
-PACKAGECONFIG:remove:riscv64 = "jit"
-PACKAGECONFIG:remove:mipsarchn64 = "jit"
-PACKAGECONFIG:remove:mipsarchn32 = "jit"
+PACKAGECONFIG_remove_powerpc = "jit"
+PACKAGECONFIG_remove_powerpc64 = "jit"
+PACKAGECONFIG_remove_powerpc64le = "jit"
+PACKAGECONFIG_remove_armv4 = "jit"
+PACKAGECONFIG_remove_armv5 = "jit"
+PACKAGECONFIG_remove_armv6 = "jit"
+PACKAGECONFIG_remove_riscv32 = "jit"
+PACKAGECONFIG_remove_riscv64 = "jit"
+PACKAGECONFIG_remove_mipsarchn64 = "jit"
+PACKAGECONFIG_remove_mipsarchn32 = "jit"
 
 # http://errors.yoctoproject.org/Errors/Details/20370/
-ARM_INSTRUCTION_SET:armv4 = "arm"
-ARM_INSTRUCTION_SET:armv5 = "arm"
-ARM_INSTRUCTION_SET:armv6 = "arm"
+ARM_INSTRUCTION_SET_armv4 = "arm"
+ARM_INSTRUCTION_SET_armv5 = "arm"
+ARM_INSTRUCTION_SET_armv6 = "arm"
 
 # Can't be built with ccache
 CCACHE_DISABLE = "1"
@@ -107,23 +107,23 @@ CCACHE_DISABLE = "1"
 # https://bugs.webkit.org/show_bug.cgi?id=159880
 # JSC JIT can build on ARMv7 with -marm, but doesn't work on runtime.
 # Upstream only tests regularly the JSC JIT on ARMv7 with Thumb2 (-mthumb).
-ARM_INSTRUCTION_SET:armv7a = "thumb"
-ARM_INSTRUCTION_SET:armv7r = "thumb"
-ARM_INSTRUCTION_SET:armv7m = "thumb"
-ARM_INSTRUCTION_SET:armv7ve = "thumb"
+ARM_INSTRUCTION_SET_armv7a = "thumb"
+ARM_INSTRUCTION_SET_armv7r = "thumb"
+ARM_INSTRUCTION_SET_armv7m = "thumb"
+ARM_INSTRUCTION_SET_armv7ve = "thumb"
 
 # Execdir is webkit2gtk-4.0 or webkit2gtk-4.1 depends on if USE_SOUP
 # is or not enabled.
 WEBKITGTK_API_VERSION := "${@bb.utils.contains('PACKAGECONFIG', 'soup2', '4.0', '4.1', d)}"
 
 # Install MiniBrowser in PATH
-do_install:append() {
+do_install_append() {
     if test -f "${D}${libexecdir}/webkit2gtk-${WEBKITGTK_API_VERSION}" ; then
         mkdir -p ${D}${bindir}
         mv ${D}${libexecdir}/webkit2gtk-${WEBKITGTK_API_VERSION}/MiniBrowser ${D}${bindir}
     fi
 }
 
-FILES:${PN} += "${libdir}/webkit2gtk-${WEBKITGTK_API_VERSION}/injected-bundle/libwebkit2gtkinjectedbundle.so"
-FILES:${PN}-dbg += "${libdir}/webkit2gtk-${WEBKITGTK_API_VERSION}/injected-bundle/.debug/libwebkit2gtkinjectedbundle.so"
-FILES:${PN}-dbg += "${libdir}/webkitgtk/webkit2gtk-${WEBKITGTK_API_VERSION}/.debug/*"
+FILES_${PN} += "${libdir}/webkit2gtk-${WEBKITGTK_API_VERSION}/injected-bundle/libwebkit2gtkinjectedbundle.so"
+FILES_${PN}-dbg += "${libdir}/webkit2gtk-${WEBKITGTK_API_VERSION}/injected-bundle/.debug/libwebkit2gtkinjectedbundle.so"
+FILES_${PN}-dbg += "${libdir}/webkitgtk/webkit2gtk-${WEBKITGTK_API_VERSION}/.debug/*"

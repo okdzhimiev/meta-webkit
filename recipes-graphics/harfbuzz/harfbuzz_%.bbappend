@@ -1,1 +1,1 @@
-PACKAGECONFIG:append = " icu"
+PACKAGECONFIG_append = " icu"

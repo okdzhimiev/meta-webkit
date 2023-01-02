@@ -11,9 +11,9 @@ S = "${WORKDIR}/git"
 
 BBCLASSEXTEND += "devupstream:target"
 
-PROVIDES:append:class-devupstream = " virtual/wpebackend"
+PROVIDES_append_class-devupstream = " virtual/wpebackend"
 
-SRC_URI:class-devupstream = "git://github.com/WebPlatformForEmbedded/WPEBackend-rdk.git;protocol=https;branch=master"
-SRCREV:class-devupstream = "f0475a271211efc501fc810304b5dc69a5e12bbb"
+SRC_URI_class-devupstream = "git://github.com/WebPlatformForEmbedded/WPEBackend-rdk.git;protocol=https;branch=master"
+SRCREV_class-devupstream = "f0475a271211efc501fc810304b5dc69a5e12bbb"
 
-RPROVIDES:${PN}:append:class-devupstream = "virtual/wpebackend"
+RPROVIDES_${PN}_append_class-devupstream = "virtual/wpebackend"

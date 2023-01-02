@@ -7,7 +7,7 @@ LICENSE = "BSD-2-Clause & ${@bb.utils.contains_any('LAYERSERIES_CORENAMES', 'dun
 LIC_FILES_CHKSUM = "file://Source/WebCore/LICENSE-LGPL-2.1;md5=a778a33ef338abbaf8b8a7c36b6eec80 "
 
 DEPENDS = " \
-    ${@bb.utils.contains_any('LAYERSERIES_CORENAMES', 'dunfell gatesgarth hardknott honister', 'libsoup-2.4', 'libsoup', d)} \
+    ${@bb.utils.contains_any('LAYERSERIES_CORENAMES', 'zeus dunfell gatesgarth hardknott honister', 'libsoup-2.4', 'libsoup', d)} \
     bison-native gperf-native harfbuzz-native libxml2-native ccache-native ninja-native ruby-native cairo \
     fontconfig freetype glib-2.0 harfbuzz icu jpeg pcre sqlite3 zlib libpng \
     libwebp libxml2 libxslt virtual/egl virtual/libgles2 libepoxy libgcrypt \
@@ -63,7 +63,7 @@ PACKAGECONFIG ??= "jit dfg-jit mediasource video webaudio webcrypto woff2 gst_gl
 
 # libsoup-3 is not available before Poky kirkstone.
 # http://git.yoctoproject.org/cgit/cgit.cgi/poky/commit/meta/recipes-support/libsoup/libsoup_3.0.1.bb?id=de296e2b2be876ca5cf2af309b710111e2b2581e
-PACKAGECONFIG:append = " ${@bb.utils.contains_any('LAYERSERIES_CORENAMES', 'dunfell gatesgarth hardknott honister', 'soup2', '', d)}"
+PACKAGECONFIG_append = " ${@bb.utils.contains_any('LAYERSERIES_CORENAMES', 'zeus dunfell gatesgarth hardknott honister', 'soup2', '', d)}"
 
 PACKAGECONFIG[reduce-size] = "-DCMAKE_BUILD_TYPE=MinSizeRel,-DCMAKE_BUILD_TYPE=Release,,"
 # WPE features
@@ -103,45 +103,45 @@ EXTRA_OECMAKE = " -DPORT=WPE -G Ninja"
 
 # If SSE code compiles, assume it runs successfully (it can't actually run
 # because of cross compiling)
-EXTRA_OECMAKE:append:x86 = " -DHAVE_SSE2_EXTENSIONS_EXITCODE=0"
+EXTRA_OECMAKE_append_x86 = " -DHAVE_SSE2_EXTENSIONS_EXITCODE=0"
 # Javascript JIT is not supported on ppc/arm < v6/RISCV/mips64
-PACKAGECONFIG:remove:powerpc = "jit"
-PACKAGECONFIG:remove:powerpc64 = "jit"
-PACKAGECONFIG:remove:powerpc64le = "jit"
-PACKAGECONFIG:remove:armv4 = "jit"
-PACKAGECONFIG:remove:armv5 = "jit"
-PACKAGECONFIG:remove:armv6 = "jit"
-PACKAGECONFIG:remove:riscv32 = "jit"
-PACKAGECONFIG:remove:riscv64 = "jit"
-PACKAGECONFIG:remove:mipsarchn64 = "jit"
-PACKAGECONFIG:remove:mipsarchn32 = "jit"
+PACKAGECONFIG_remove_powerpc = "jit"
+PACKAGECONFIG_remove_powerpc64 = "jit"
+PACKAGECONFIG_remove_powerpc64le = "jit"
+PACKAGECONFIG_remove_armv4 = "jit"
+PACKAGECONFIG_remove_armv5 = "jit"
+PACKAGECONFIG_remove_armv6 = "jit"
+PACKAGECONFIG_remove_riscv32 = "jit"
+PACKAGECONFIG_remove_riscv64 = "jit"
+PACKAGECONFIG_remove_mipsarchn64 = "jit"
+PACKAGECONFIG_remove_mipsarchn32 = "jit"
 
 # Javascript JIT is not supported on x86
-PACKAGECONFIG:remove:x86 = "jit"
+PACKAGECONFIG_remove_x86 = "jit"
 
-PACKAGECONFIG:remove:mipsarcho32:toolchain-clang = "jit"
+PACKAGECONFIG_remove_mipsarcho32_toolchain-clang = "jit"
 
-LDFLAGS:append:riscv64 = " -pthread"
+LDFLAGS_append_riscv64 = " -pthread"
 
-FULL_OPTIMIZATION:remove = "-g"
+FULL_OPTIMIZATION_remove = "-g"
 
 LEAD_SONAME = "libWPEWebKit.so"
 PACKAGES =+ "${PN}-web-inspector-plugin ${PN}-qtwpe-qml-plugin"
-FILES:${PN} += "${libdir}/wpe-webkit*/injected-bundle/libWPEInjectedBundle.so"
-FILES:${PN}-web-inspector-plugin += "${libdir}/libWPEWebInspectorResources.so ${libdir}/wpe-webkit-*/libWPEWebInspectorResources.so"
-INSANE_SKIP:${PN}-web-inspector-plugin = "dev-so"
+FILES_${PN} += "${libdir}/wpe-webkit*/injected-bundle/libWPEInjectedBundle.so"
+FILES_${PN}-web-inspector-plugin += "${libdir}/libWPEWebInspectorResources.so ${libdir}/wpe-webkit-*/libWPEWebInspectorResources.so"
+INSANE_SKIP_${PN}-web-inspector-plugin = "dev-so"
 
-FILES:${PN}-qtwpe-qml-plugin += "${libdir}/qt5/qml/org/wpewebkit/qtwpe/*"
-INSANE_SKIP:${PN}-qtwpe-qml-plugin = "dev-so"
+FILES_${PN}-qtwpe-qml-plugin += "${libdir}/qt5/qml/org/wpewebkit/qtwpe/*"
+INSANE_SKIP_${PN}-qtwpe-qml-plugin = "dev-so"
 
 # JSC JIT on ARMv7 is better supported with Thumb2 instruction set.
-ARM_INSTRUCTION_SET:armv7a = "thumb"
-ARM_INSTRUCTION_SET:armv7r = "thumb"
-ARM_INSTRUCTION_SET:armv7m = "thumb"
-ARM_INSTRUCTION_SET:armv7ve = "thumb"
+ARM_INSTRUCTION_SET_armv7a = "thumb"
+ARM_INSTRUCTION_SET_armv7r = "thumb"
+ARM_INSTRUCTION_SET_armv7m = "thumb"
+ARM_INSTRUCTION_SET_armv7ve = "thumb"
 
 # Extra runtime depends
-RDEPENDS:${PN} += " \
+RDEPENDS_${PN} += " \
     libgles2 \
     virtual/wpebackend \
     ${@bb.utils.contains('PACKAGECONFIG', 'remote-inspector', '${PN}-web-inspector-plugin', '', d)} \
@@ -171,7 +171,7 @@ RDEPENDS_${PN}-web-inspector-plugin += " \
 "
 
 # Extra runtime recommends
-RRECOMMENDS:${PN} += " \
+RRECOMMENDS_${PN} += " \
     ca-certificates \
     ttf-dejavu-sans \
     ttf-dejavu-sans-mono \
